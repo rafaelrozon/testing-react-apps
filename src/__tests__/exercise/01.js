@@ -5,24 +5,34 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import Counter from '../../components/counter'
 
+beforeEach(() => {
+  document.body.innerHTML = "";
+})
+
 test('counter increments and decrements when the buttons are clicked', () => {
-  // 🐨 create a div to render your component to (💰 document.createElement)
-  //
-  // 🐨 append the div to document.body (💰 document.body.append)
-  //
-  // 🐨 use ReactDOM.render to render the <Counter /> to the div
-  // 🐨 get a reference to the increment and decrement buttons:
-  //   💰 div.querySelectorAll('button')
-  // 🐨 get a reference to the message div:
-  //   💰 div.firstChild.querySelector('div')
-  //
-  // 🐨 expect the message.textContent toBe 'Current count: 0'
-  // 🐨 click the increment button (💰 increment.click())
-  // 🐨 assert the message.textContent
-  // 🐨 click the decrement button (💰 decrement.click())
-  // 🐨 assert the message.textContent
-  //
-  // 🐨 cleanup by removing the div from the page (💰 div.remove())
+  const div = document.createElement("div");
+
+  div.setAttribute("id", "root")
+  
+  document.body.append(div)
+  
+  ReactDOM.render(<Counter />, document.getElementById("root"))
+
+  const buttons = div.querySelectorAll('button');
+  const decrementBtn = buttons[0]
+  const incrementBtn = buttons[1];
+  const msg = div.querySelectorAll('div')[1];
+  
+  expect(msg.textContent).toBe("Current count: 0");
+  
+  incrementBtn.click();
+  
+  expect(msg.textContent).toBe("Current count: 1");
+  
+  decrementBtn.click()
+  
+  expect(msg.textContent).toBe('Current count: 0')
+  
   // 🦉 If you don't cleanup, then it could impact other tests and/or cause a memory leak
 })
 
